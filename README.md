@@ -81,7 +81,68 @@ npm run fetch-ffmpeg
 
 ### Pre-built releases
 
-Download the latest release for your platform from [GitHub Releases](https://github.com/voronkovd/all-audio/releases).
+Latest release: **[v0.1.1](https://github.com/voronkovd/all-audio/releases/tag/v0.1.1)**  
+All downloads: [GitHub Releases](https://github.com/voronkovd/all-audio/releases)
+
+> **Note:** Installer filenames use app version `0.1.0` from `tauri.conf.json`; the git release tag is `v0.1.1`.
+
+| Platform | File | Download |
+|----------|------|----------|
+| **macOS** (Apple Silicon) | `.dmg` | [All.Audio_0.1.0_aarch64.dmg](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_0.1.0_aarch64.dmg) |
+| **macOS** (Apple Silicon) | `.app.tar.gz` | [All.Audio_aarch64.app.tar.gz](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_aarch64.app.tar.gz) |
+| **Windows** (x64) | `.msi` | [All.Audio_0.1.0_x64_en-US.msi](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_0.1.0_x64_en-US.msi) |
+| **Windows** (x64) | setup `.exe` | [All.Audio_0.1.0_x64-setup.exe](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_0.1.0_x64-setup.exe) |
+| **Linux** (x64) | `.deb` | [All.Audio_0.1.0_amd64.deb](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_0.1.0_amd64.deb) |
+| **Linux** (x64) | `.AppImage` | [All.Audio_0.1.0_amd64.AppImage](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio_0.1.0_amd64.AppImage) |
+| **Linux** (x64) | `.rpm` | [All.Audio-0.1.0-1.x86_64.rpm](https://github.com/voronkovd/all-audio/releases/download/v0.1.1/All.Audio-0.1.0-1.x86_64.rpm) |
+
+Release builds are **unsigned**. See [First launch](#first-launch) below if the OS blocks the app.
+
+### First launch
+
+#### macOS
+
+After downloading, macOS may show **«Приложение повреждено»** or refuse to open the app. The app is not broken — Gatekeeper blocks unsigned builds downloaded from the browser.
+
+1. Open **Terminal** (Программы → Утилиты → Терминал).
+2. Remove the quarantine flag (adjust the path if needed):
+
+```bash
+xattr -cr ~/Downloads/All\ Audio.app
+```
+
+If the app is already in Applications:
+
+```bash
+xattr -cr /Applications/All\ Audio.app
+```
+
+3. Right-click `All Audio.app` → **Open** → **Open** (do not use double-click the first time).
+
+If it still does not open, ad-hoc sign the app and try again:
+
+```bash
+codesign --force --deep --sign - ~/Downloads/All\ Audio.app
+xattr -cr ~/Downloads/All\ Audio.app
+open ~/Downloads/All\ Audio.app
+```
+
+For `.dmg`: open the disk image, drag the app to Applications, then run `xattr` on `/Applications/All Audio.app`.
+
+#### Windows
+
+SmartScreen may warn about an unknown publisher. Click **More info** → **Run anyway**.
+
+For `.msi`: right-click → **Properties** → check **Unblock** at the bottom → OK → install again.
+
+#### Linux
+
+For `.AppImage`:
+
+```bash
+chmod +x All.Audio_0.1.0_amd64.AppImage
+./All.Audio_0.1.0_amd64.AppImage
+```
 
 ### Build from source
 
@@ -176,7 +237,7 @@ src-tauri/            Rust backend
 
 | Command | Description |
 |---------|-------------|
-| `check_ffmpeg_available` | Checks whether `ffmpeg` and `ffprobe` are in `PATH` |
+| `check_ffmpeg_available` | Checks whether bundled `ffmpeg` and `ffprobe` are available |
 | `probe_audio_file` | Reads duration, codec, sample rate, channels, bitrate |
 | `convert_audio` | Converts one file or splits FLAC by CUE |
 
@@ -214,6 +275,10 @@ This project uses **[FFmpeg](https://ffmpeg.org/)** for audio conversion and met
 The All Audio application itself remains under the [MIT License](LICENSE). FFmpeg licensing is documented separately in `third_party/` and is not merged into the project license.
 
 ## FAQ
+
+### Why does macOS say the app is damaged?
+
+Release builds are not signed with an Apple Developer certificate. After downloading from Chrome or another browser, macOS sets a quarantine flag. Run `xattr -cr` on the `.app` bundle — see [First launch](#first-launch).
 
 ### Why does the app say FFmpeg is not found?
 
