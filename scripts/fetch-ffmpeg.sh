@@ -47,7 +47,16 @@ already_present() {
 download_btbn_archive() {
   local archive_name="$1"
   local archive_path
-  archive_path="$(mktemp)"
+
+  if [[ "$archive_name" == *.tar.xz ]]; then
+    archive_path="$(mktemp /tmp/ffmpeg.XXXXXX.tar.xz)"
+  elif [[ "$archive_name" == *.zip ]]; then
+    archive_path="$(mktemp /tmp/ffmpeg.XXXXXX.zip)"
+  else
+    echo "Unsupported BtbN archive name: $archive_name" >&2
+    exit 1
+  fi
+
   curl -fsSL "${BTBN_BASE}/${archive_name}" -o "$archive_path"
   printf '%s' "$archive_path"
 }
@@ -57,18 +66,14 @@ extract_btbn_archive() {
   local extract_dir
   extract_dir="$(mktemp -d)"
 
-  case "$archive_path" in
-    *.zip)
-      unzip -q "$archive_path" -d "$extract_dir"
-      ;;
-    *.tar.xz)
-      tar -xf "$archive_path" -C "$extract_dir"
-      ;;
-    *)
-      echo "Unsupported archive format: $archive_path" >&2
-      exit 1
-      ;;
-  esac
+  if [[ "$archive_path" == *.zip ]]; then
+    unzip -q "$archive_path" -d "$extract_dir"
+  elif [[ "$archive_path" == *.tar.xz ]]; then
+    tar -xf "$archive_path" -C "$extract_dir"
+  else
+    echo "Unsupported archive format: $archive_path" >&2
+    exit 1
+  fi
 
   local bin_dir
   bin_dir="$(find "$extract_dir" -type d -name bin | head -n 1)"
