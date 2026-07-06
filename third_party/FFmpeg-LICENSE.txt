@@ -1,0 +1,50 @@
+GNU LESSER GENERAL PUBLIC LICENSE
+Version 2.1, February 1999
+
+Copyright (C) 1991, 1999 Free Software Foundation, Inc.
+51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+Everyone is permitted to copy and distribute verbatim copies of this license
+document, but changing it is not allowed.
+
+[This is the first released version of the Lesser GPL.  It also counts as the
+successor of the GNU Library Public License, version 2, hence the version
+number 2.1.]
+
+Full text: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+---
+
+FFmpeg bundled with All Audio
+
+Official FFmpeg project website:
+
+https://ffmpeg.org/
+
+These binaries are provided separately from the All Audio application source code,
+which is licensed under the MIT License. See the repository LICENSE file.
+
+## Windows and Linux binaries
+
+LGPL static builds from BtbN/FFmpeg-Builds:
+
+https://github.com/BtbN/FFmpeg-Builds
+
+Artifacts used:
+
+- `ffmpeg-master-latest-win64-lgpl.zip`
+- `ffmpeg-master-latest-linux64-lgpl.tar.xz`
+
+## macOS binaries
+
+Static builds from the eugeneware/ffmpeg-static project (release `b6.1.1`):
+
+https://github.com/eugeneware/ffmpeg-static
+
+Upstream sources for macOS builds are documented in that repository (Intel builds
+from evermeet.cx, Apple Silicon builds from osxexperts.net). These static builds
+may include GPL-licensed components. See FFmpeg-NOTICES.md for details.
+
+To obtain FFmpeg source code, refer to:
+
+https://ffmpeg.org/download.html

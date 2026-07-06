@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+*.rs linguist-language=Rust
+*.svelte linguist-language=Svelte
+*.png binary
+*.ico binary
+*.icns binary
+
+Cargo.lock linguist-generated=false

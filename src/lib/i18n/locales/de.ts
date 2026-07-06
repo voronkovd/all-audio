@@ -1,0 +1,117 @@
+import type { Messages } from "../types";
+
+export const de: Messages = {
+  app: {
+    title: "All Audio",
+    subtitle:
+      "Audiodateien mit FFmpeg zwischen gängigen Formaten konvertieren.",
+  },
+  language: {
+    label: "Sprache",
+    en: "English",
+    ru: "Русский",
+    de: "Deutsch",
+    fr: "Français",
+  },
+  input: {
+    title: "Eingabedatei",
+    chooseFile: "Datei wählen",
+    noFile: "Keine Datei ausgewählt",
+    audioFilter: "Audio",
+  },
+  probe: {
+    title: "Quellinformationen",
+    duration: "Dauer",
+    codec: "Codec",
+    sampleRate: "Abtastrate",
+    channels: "Kanäle",
+    bitrate: "Bitrate",
+    empty: "—",
+  },
+  output: {
+    title: "Ausgabeeinstellungen",
+    format: "Format",
+    mp3Bitrate: "MP3-Bitrate",
+    saveTo: "Speichern in",
+    noFolder: "Kein Ordner ausgewählt",
+    chooseFolder: "Ordner wählen",
+    filename: "Ausgabedateiname",
+    filenamePlaceholder: "beispiel.mp3",
+  },
+  cue: {
+    title: "CUE-Aufteilung",
+    chooseFile: "CUE-Datei wählen",
+    noFile: "Keine CUE-Datei ausgewählt",
+    filter: "CUE",
+    splitCheckbox: "FLAC per CUE aufteilen",
+    warning:
+      "Die CUE-Aufteilung ist experimentell. Bitte Grenzen der Titel prüfen. Wenn das CUE mehrere FLAC-Dateien referenziert, wählen Sie die passende Eingabedatei.",
+  },
+  status: {
+    label: "Status",
+    idle: "Bereit",
+    checkingFfmpeg: "FFmpeg wird geprüft…",
+    probing: "Datei wird analysiert…",
+    converting: "Konvertierung…",
+    splitting: "Titel werden getrennt…",
+    done: "Fertig",
+    error: "Fehler",
+    ffmpegBothMissing:
+      "Eingebettetes FFmpeg und FFprobe fehlen oder sind beschädigt. App neu installieren oder für Entwicklung npm run fetch-ffmpeg ausführen.",
+    ffmpegMissing:
+      "Eingebettetes FFmpeg fehlt oder ist beschädigt. App neu installieren oder für Entwicklung npm run fetch-ffmpeg ausführen.",
+    ffprobeMissing:
+      "Eingebettetes FFprobe fehlt oder ist beschädigt. App neu installieren oder für Entwicklung npm run fetch-ffmpeg ausführen.",
+  },
+  actions: {
+    convert: "Konvertieren",
+    splitTracks: "Titel trennen",
+  },
+  success: {
+    savedTo: "Gespeichert unter {path}",
+    createdTracks: "{count} Titel erstellt.",
+    createdFiles: "{count} Dateien erstellt.",
+  },
+  errors: {
+    unknown: "Unbekannter Fehler",
+    commandNotFound: "Eingebettetes FFmpeg konnte nicht ausgeführt werden",
+    commandFailed: "Externer Befehl konnte nicht ausgeführt werden",
+    ffprobeFailed: "FFprobe konnte die Eingabedatei nicht analysieren",
+    ffprobeParseFailed: "FFprobe-Ausgabe konnte nicht gelesen werden",
+    sameInputOutput: "Eingabe- und Ausgabedatei müssen unterschiedlich sein",
+    cueRequiresFlac: "CUE-Aufteilung wird nur für FLAC unterstützt",
+    cuePathRequired: "CUE-Dateipfad ist erforderlich",
+    outputFileExists: "Ausgabedatei existiert bereits",
+    ffmpegFailed: "FFmpeg-Konvertierung fehlgeschlagen",
+    cueReadFailed: "CUE-Datei konnte nicht gelesen werden",
+    cueMultipleFiles:
+      "CUE referenziert mehrere Audiodateien. Wählen Sie die passende FLAC-Datei.",
+    cueNoTracks: "CUE enthält keine Titel mit INDEX 01",
+    invalidInputPath: "Ungültiger Pfad zur Eingabedatei",
+    inputNotFound: "Eingabedatei existiert nicht",
+    unsupportedInputExtension: "Nicht unterstützte Eingabeerweiterung",
+    unsupportedOutputFormat: "Nicht unterstütztes Ausgabeformat",
+    invalidOutputDir: "Ungültiger Ausgabeordner",
+    outputDirNotFound: "Ausgabeordner existiert nicht",
+    invalidOutputFilename: "Ungültiger Ausgabedateiname",
+    outputExtensionMismatch:
+      "Dateierweiterung passt nicht zum gewählten Format",
+    invalidCuePath: "Ungültiger CUE-Dateipfad",
+    cueNotFound: "CUE-Datei existiert nicht",
+    invalidCueExtension: "CUE-Datei muss die Erweiterung .cue haben",
+    invalidMp3Bitrate: "Nicht unterstützte MP3-Bitrate",
+    conversionTaskFailed: "Konvertierungsaufgabe fehlgeschlagen",
+    cueFileMismatch:
+      'CUE enthält keine Titel für „{name}“. Referenzierte Dateien: {files}',
+    cueAmbiguousFile: 'CUE enthält mehrere Abschnitte für „{name}“',
+    cueInvalidTrackOrder:
+      "Titel {trackB} beginnt gleichzeitig mit oder vor Titel {trackA}. INDEX 01 im CUE prüfen.",
+    cueInvalidTrackDuration:
+      "Titel {trackA} hat eine ungültige Dauer relativ zu Titel {trackB}",
+    bundledFfmpegMissing: "Eingebettetes FFmpeg wurde im App-Paket nicht gefunden",
+    bundledFfprobeMissing: "Eingebettetes FFprobe wurde im App-Paket nicht gefunden",
+    bundledFfmpegNotExecutable: "Eingebettetes FFmpeg ist nicht ausführbar",
+    bundledFfmpegInvalid: "Eingebettetes FFmpeg ist ungültig oder nicht verfügbar",
+    bundledFfmpegResolveFailed: "Eingebettete FFmpeg-Ressourcen konnten nicht gefunden werden",
+  },
+};

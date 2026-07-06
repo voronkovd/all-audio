@@ -1,0 +1,90 @@
+name: Bug Report
+description: Report a problem with All Audio
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the form below.
+
+  - type: input
+    id: version
+    attributes:
+      label: All Audio version
+      description: Release tag, app version, or commit hash
+      placeholder: v0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Linux
+        - Windows
+        - macOS
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version
+      placeholder: e.g. Ubuntu 22.04, Windows 11, macOS 14
+    validations:
+      required: true
+
+  - type: textarea
+    id: ffmpeg-version
+    attributes:
+      label: FFmpeg version
+      description: Output of `ffmpeg -version` (first few lines are enough)
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps to reproduce the issue
+      placeholder: |
+        1. Open the app
+        2. Select input file ...
+        3. Click Convert
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Error messages, terminal output, or screenshots (no private audio files)
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues before opening this report
+          required: true
+        - label: I am using a supported version (see SECURITY.md)
+          required: true

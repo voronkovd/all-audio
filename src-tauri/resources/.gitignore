@@ -1,0 +1,6 @@
+# Bundled FFmpeg binaries are downloaded by scripts/fetch-ffmpeg.sh
+# and are not committed to the repository.
+
+windows/
+linux/
+macos/
