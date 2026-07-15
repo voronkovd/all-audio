@@ -3,11 +3,12 @@ mod cue;
 mod error;
 mod ffmpeg;
 mod ffmpeg_provider;
+mod metadata;
 mod models;
 mod path_util;
 mod validation;
 
-use commands::{check_ffmpeg_available, convert_audio, probe_audio_file};
+use commands::{check_ffmpeg_available, convert_audio, probe_audio_file, read_cue_album_info};
 use ffmpeg_provider::FfmpegProvider;
 use tauri::Manager;
 
@@ -24,6 +25,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             check_ffmpeg_available,
             probe_audio_file,
+            read_cue_album_info,
             convert_audio
         ])
         .run(tauri::generate_context!())
