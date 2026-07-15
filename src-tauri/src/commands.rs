@@ -4,6 +4,7 @@ use crate::ffmpeg::{
     probe_audio_file as probe_audio,
 };
 use crate::ffmpeg_provider::FfmpegProvider;
+use crate::metadata::{parse_cue_album_info, CueAlbumInfo};
 use crate::models::{AudioProbe, ConvertAudioRequest, ConvertAudioResult, FfmpegAvailability};
 
 #[tauri::command]
@@ -17,6 +18,18 @@ pub fn probe_audio_file(
     input_path: String,
 ) -> CommandResult<AudioProbe> {
     probe_audio(&provider, &input_path)
+}
+
+#[tauri::command]
+pub fn read_cue_album_info(cue_path: String) -> CommandResult<CueAlbumInfo> {
+    let content = std::fs::read_to_string(&cue_path).map_err(|error| {
+        crate::error::CommandError::new(
+            "cue_read_failed",
+            format!("Failed to read CUE file: {error}"),
+        )
+    })?;
+
+    Ok(parse_cue_album_info(&content))
 }
 
 #[tauri::command]

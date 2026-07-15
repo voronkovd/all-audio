@@ -6,6 +6,7 @@
   import CueSplit from "$lib/components/CueSplit.svelte";
   import InputFilePicker from "$lib/components/InputFilePicker.svelte";
   import LanguageSelector from "$lib/components/LanguageSelector.svelte";
+  import Mp3TagsSettings from "$lib/components/Mp3TagsSettings.svelte";
   import OutputSettings from "$lib/components/OutputSettings.svelte";
   import StatusPanel from "$lib/components/StatusPanel.svelte";
   import {
@@ -13,17 +14,27 @@
     convertAudio,
     parseCommandError,
     probeAudioFile,
+    readCueAlbumInfo,
   } from "$lib/api";
   import { isFlacFile } from "$lib/audio";
   import { defaultOutputName } from "$lib/format";
   import { formatMessage, locale, messages } from "$lib/i18n/store";
+  import {
+    emptyMp3Tags,
+    fillEmptyMp3Tags,
+    mp3TagsFromMetadata,
+    mp3TagsToApi,
+  } from "$lib/mp3";
   import type { AppStatus, AudioProbe, Mp3Bitrate, OutputFormat } from "$lib/types";
+  import type { Mp3Tags } from "$lib/mp3";
 
   let inputPath = $state("");
   let outputDir = $state("");
   let outputFilename = $state("");
   let outputFormat = $state<OutputFormat>("mp3");
   let mp3Bitrate = $state<Mp3Bitrate>("320k");
+  let mp3Tags = $state<Mp3Tags>(emptyMp3Tags());
+  let coverPath = $state("");
   let cuePath = $state("");
   let splitByCue = $state(false);
   let lastError = $state<unknown>(null);
@@ -106,6 +117,19 @@
     }
   }
 
+  async function applyCueAlbumTags(path: string) {
+    try {
+      const album = await readCueAlbumInfo(path);
+      mp3Tags = fillEmptyMp3Tags(mp3Tags, {
+        album: album.title ?? "",
+        albumArtist: album.performer ?? "",
+        artist: album.performer ?? "",
+      });
+    } catch {
+      // CUE album metadata is optional for the UI.
+    }
+  }
+
   async function handleInputSelect(path: string) {
     inputPath = path;
     probe = null;
@@ -113,6 +137,8 @@
     successInfo = null;
     createdFiles = [];
     outputFilename = defaultOutputName(path, outputFormat);
+    mp3Tags = emptyMp3Tags();
+    coverPath = "";
 
     if (!isFlacFile(path)) {
       cuePath = "";
@@ -127,6 +153,7 @@
 
     try {
       probe = await probeAudioFile(path);
+      mp3Tags = mp3TagsFromMetadata(probe.metadata);
       status = "idle";
     } catch (error) {
       status = "error";
@@ -147,6 +174,7 @@
     lastError = null;
     successInfo = null;
     createdFiles = [];
+    void applyCueAlbumTags(path);
   }
 
   function handleSplitByCueChange(enabled: boolean) {
@@ -172,6 +200,11 @@
           mp3Bitrate: outputFormat === "mp3" ? mp3Bitrate : undefined,
           cuePath: splitByCue ? cuePath : undefined,
           splitByCue,
+          mp3Tags: outputFormat === "mp3" ? mp3TagsToApi(mp3Tags) : undefined,
+          coverPath:
+            outputFormat === "mp3" && coverPath.trim().length > 0
+              ? coverPath
+              : undefined,
         },
       );
 
@@ -241,6 +274,27 @@
         createdFiles = [];
       }}
     />
+
+    {#if outputFormat === "mp3"}
+      <Mp3TagsSettings
+        tags={mp3Tags}
+        {coverPath}
+        {splitByCue}
+        disabled={isBusy}
+        onTagsChange={(tags) => {
+          mp3Tags = tags;
+          lastError = null;
+          successInfo = null;
+          createdFiles = [];
+        }}
+        onCoverPathChange={(path) => {
+          coverPath = path;
+          lastError = null;
+          successInfo = null;
+          createdFiles = [];
+        }}
+      />
+    {/if}
 
     {#if isFlacInput}
       <CueSplit

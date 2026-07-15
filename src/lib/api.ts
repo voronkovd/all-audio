@@ -7,6 +7,7 @@ import type {
   AudioProbe,
   ConvertAudioOptions,
   ConvertAudioResult,
+  CueAlbumInfo,
   FfmpegAvailability,
   OutputFormat,
 } from "./types";
@@ -21,6 +22,10 @@ export async function checkFfmpegAvailable(): Promise<FfmpegAvailability> {
 
 export async function probeAudioFile(inputPath: string): Promise<AudioProbe> {
   return invoke<AudioProbe>("probe_audio_file", { inputPath });
+}
+
+export async function readCueAlbumInfo(cuePath: string): Promise<CueAlbumInfo> {
+  return invoke<CueAlbumInfo>("read_cue_album_info", { cuePath });
 }
 
 export async function convertAudio(
@@ -39,6 +44,8 @@ export async function convertAudio(
       mp3_bitrate: options.mp3Bitrate,
       cue_path: options.cuePath,
       split_by_cue: options.splitByCue,
+      mp3_tags: options.mp3Tags,
+      cover_path: options.coverPath,
     },
   });
 }

@@ -45,6 +45,30 @@ export interface Messages {
     splitCheckbox: string;
     warning: string;
   };
+  mp3Tags: {
+    title: string;
+    hint: string;
+    cueHint: string;
+    titleField: string;
+    titlePlaceholder: string;
+    artist: string;
+    artistPlaceholder: string;
+    album: string;
+    albumPlaceholder: string;
+    albumArtist: string;
+    albumArtistPlaceholder: string;
+    year: string;
+    yearPlaceholder: string;
+    genre: string;
+    genrePlaceholder: string;
+    track: string;
+    trackPlaceholder: string;
+    cover: string;
+    noCover: string;
+    chooseCover: string;
+    clearCover: string;
+    coverFilter: string;
+  };
   status: {
     label: string;
     idle: string;
@@ -103,5 +127,8 @@ export interface Messages {
     bundledFfmpegNotExecutable: string;
     bundledFfmpegInvalid: string;
     bundledFfmpegResolveFailed: string;
+    invalidCoverPath: string;
+    coverNotFound: string;
+    unsupportedCoverExtension: string;
   };
 }

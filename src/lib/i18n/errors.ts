@@ -37,6 +37,9 @@ const ERROR_CODE_MAP: Record<string, keyof Messages["errors"]> = {
   bundled_ffmpeg_not_executable: "bundledFfmpegNotExecutable",
   bundled_ffmpeg_invalid: "bundledFfmpegInvalid",
   bundled_ffmpeg_resolve_failed: "bundledFfmpegResolveFailed",
+  invalid_cover_path: "invalidCoverPath",
+  cover_not_found: "coverNotFound",
+  unsupported_cover_extension: "unsupportedCoverExtension",
 };
 
 function interpolate(

@@ -33,6 +33,22 @@ export interface AudioProbe {
   sample_rate: number | null;
   channels: number | null;
   bitrate: number | null;
+  metadata: AudioMetadata;
+}
+
+export interface AudioMetadata {
+  title: string | null;
+  artist: string | null;
+  album: string | null;
+  album_artist: string | null;
+  year: string | null;
+  genre: string | null;
+  track: string | null;
+}
+
+export interface CueAlbumInfo {
+  title: string | null;
+  performer: string | null;
 }
 
 export interface ConvertAudioResult {
@@ -44,8 +60,12 @@ export interface CommandError {
   message: string;
 }
 
+import type { Mp3TagsApi } from "./mp3";
+
 export interface ConvertAudioOptions {
   mp3Bitrate?: Mp3Bitrate;
   cuePath?: string;
   splitByCue?: boolean;
+  mp3Tags?: Mp3TagsApi;
+  coverPath?: string;
 }
